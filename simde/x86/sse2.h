@@ -248,6 +248,9 @@ typedef union {
   #else
      typedef simde__m128d_private simde__m128d;
   #endif
+#elif defined(SIMDE_LOONGARCH_LSX_NATIVE)
+  typedef __m128i simde__m128i;
+  typedef __m128d simde__m128d;
 #elif defined(SIMDE_VECTOR_SUBSCRIPT)
   typedef int64_t simde__m128i SIMDE_ALIGN_TO_16 SIMDE_VECTOR(16) SIMDE_MAY_ALIAS;
   typedef simde_float64 simde__m128d SIMDE_ALIGN_TO_16 SIMDE_VECTOR(16) SIMDE_MAY_ALIAS;
@@ -256,10 +259,11 @@ typedef union {
   typedef simde__m128d_private simde__m128d;
 #endif
 
-#if defined(SIMDE_X86_SSE2_ENABLE_NATIVE_ALIASES)
+#if defined(SIMDE_X86_SSE2_ENABLE_NATIVE_ALIASES) && !defined(SIMDE_LOONGARCH_LSX_NATIVE)
   typedef simde__m128i __m128i;
   typedef simde__m128d __m128d;
 #endif
+
 
 HEDLEY_STATIC_ASSERT(16 == sizeof(simde__m128i), "simde__m128i size incorrect");
 HEDLEY_STATIC_ASSERT(16 == sizeof(simde__m128i_private), "simde__m128i_private size incorrect");
